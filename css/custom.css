@@ -34,7 +34,7 @@
     width: 120px;
     height: 1px;
     display: inline-block;
-    background: #e6636a;
+    background: #4444FF;
     margin: 4px 10px;
 }
 
@@ -235,10 +235,14 @@
     margin-top: 40px;
 }
 
-/* --- Logo --- */
+/* --- Nav --- */
 
 .logo-image {
     width: 80px !important;
+}
+
+.navbar-nav {
+    margin-left: 3rem;
 }
 
 /* ---- Footer ---- */
