@@ -233,6 +233,7 @@
 
 .display-1 {
     font-size: 4rem !important;
+    text-align: center;
 }
 
 .contact .info .email, .contact .info .phone {
