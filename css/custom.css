@@ -231,6 +231,10 @@
     color: #8795a4;
 }
 
+.display-1 {
+    font-size: 4rem !important;
+}
+
 .contact .info .email, .contact .info .phone {
     margin-top: 40px;
 }
