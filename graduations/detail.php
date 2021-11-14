@@ -136,7 +136,7 @@
                             require_once "../config.php";
 
                             // Modals
-                            $fetch_modal = "SELECT `id`, `title`, `body`, `image`, DATE_FORMAT(`created_at`, '%M %d, %Y') AS `created_at` FROM `graduations` WHERE `id` = ? ";                            
+                            $fetch_modal = "SELECT `id`, `title`, `body`, `facebook`, `youtube`, `instagram`, `twitter`, `image`, DATE_FORMAT(`created_at`, '%M %d, %Y') AS `created_at` FROM `graduations` WHERE `id` = ? ";                            
                             $stmt = $conn -> prepare($fetch_modal);
                             $stmt->bind_param("s", $_GET["id"]);
 
@@ -153,7 +153,7 @@
                             else
                             {
 
-                                $stmt->bind_result($id, $title, $body, $image, $created_at);
+                                $stmt->bind_result($id, $title, $body, $facebook, $youtube, $instagram, $twitter, $image, $created_at);
                                 
                                 // output data of each row
                                 while($stmt->fetch()) 
@@ -204,16 +204,16 @@
                                                 </div>
 
                                                 <div class="float-right share">
-                                                    <a href="#" title="Share on Twitter" target="__blank">
+                                                    <a href="<?php echo $twitter; ?>" title="Share on Twitter" target="__blank">
                                                         <i class="fab fa-twitter"></i>
                                                     </a>
-                                                    <a href="#" title="Share on Facebook" target="__blank">
+                                                    <a href="<?php echo $facebook; ?>" title="Share on Facebook" target="__blank">
                                                         <i class="fab fa-facebook"></i>
                                                     </a>
-                                                    <a href="#" title="Share on Instagram" target="__blank">
+                                                    <a href="<?php echo $instagram; ?>" title="Share on Instagram" target="__blank">
                                                         <i class="fab fa-instagram"></i>
                                                     </a>
-                                                    <a href="https://youtu.be/jM-MqBbv-ts" title="Share on Youtube" target="__blank">
+                                                    <a href="<?php echo $youtube; ?>" title="Share on Youtube" target="__blank">
                                                         <i class="fab fa-youtube"></i>
                                                     </a>
                                                 </div>
