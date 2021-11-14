@@ -33,82 +33,7 @@
     <div id="app">
 
         <!-- Header -->
-        <header>
-            <nav class="navbar navbar-expand-md navbar-light bg-white">
-                <div class="container d-flex align-items-center">
-
-                    <!-- Logo -->
-                    <a href="index" class="navbar-brand">
-                        <img style="width: 150px; height: 10%;" src="img/logo.png" alt="" class="img-fluid logo-image">
-                    </a>
-
-                    <!-- Mobile Menu -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <!-- Menu -->
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav mr-auto">
-
-                            <!-- Home -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold "
-                                    href="index">Home</a>
-                            </li>
-
-                            <!-- About -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold " href="about">About</a>
-                            </li>
-
-                            <!-- Courses -->
-                            <li class="nav-item active">
-                                <a class="nav-link text-bold"
-                                    href="courses">Courses</a>
-                            </li>
-
-                            <!-- Events -->
-                            <li
-                                class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle "
-                                    href="#" id="eventss" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Events
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="eventss">
-
-                                    <a class="dropdown-item bg-white "
-                                        href="graduations">Graduations</a>
-
-                                    <a class="dropdown-item bg-white "
-                                        href="achievements">Achievements</a>
-
-                                    <a class="dropdown-item bg-white "
-                                        href="keynotes">Keynotes</a>
-
-
-                                </div>
-                            </li>
-
-                            <!-- Partners -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold "
-                                    href="partners">Partners</a>
-                            </li>
-
-                            <!-- Contact Us -->
-                            <li class="nav-item ">
-                                <a class="nav-link text-bold "
-                                    href="contact-us">Contact US</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </nav>
-        </header>
+        <?php include('statics/header.php') ?>
         
         <!-- Content -->
         <main id="main">
@@ -420,6 +345,7 @@
     <!-- Scripts -->
     <script src="vendor/jquery/jquery.min.js" defer></script>
     <script src="bootstrap-4.5.3-dist/js/bootstrap.min.js" defer></script>
+    <script> document.getElementById('courses-navigations').classList.add("active") </script>
 
 </body>
 

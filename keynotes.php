@@ -33,82 +33,7 @@
     <div id="app">
 
         <!-- Header -->
-        <header>
-            <nav class="navbar navbar-expand-md navbar-light bg-white">
-                <div class="container d-flex align-items-center">
-
-                    <!-- Logo -->
-                    <a href="index" class="navbar-brand">
-                        <img style="width: 150px; height: 10%;" src="img/logo.png" alt="" class="img-fluid logo-image">
-                    </a>
-
-                    <!-- Mobile Menu -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <!-- Menu -->
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav mr-auto">
-
-                            <!-- Home -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold "
-                                    href="index">Home</a>
-                            </li>
-
-                            <!-- About -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold " href="about">About</a>
-                            </li>
-
-                            <!-- Courses -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold "
-                                    href="courses">Courses</a>
-                            </li>
-
-                            <!-- Events -->
-                            <li
-                                class="nav-item dropdown active">
-                                <a class="nav-link dropdown-toggle "
-                                    href="#" id="eventss" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Events
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="eventss">
-
-                                    <a class="dropdown-item bg-white"
-                                        href="graduations">Graduations</a>
-
-                                    <a class="dropdown-item bg-white"
-                                        href="achievements">Achievements</a>
-
-                                    <a class="dropdown-item bg-white active"
-                                        href="keynotes">Keynotes</a>
-
-
-                                </div>
-                            </li>
-
-                            <!-- Partners -->
-                            <li class="nav-item ">
-                                <a class="nav-link text-bold "
-                                    href="partners">Partners</a>
-                            </li>
-
-                            <!-- Contact Us -->
-                            <li class="nav-item ">
-                                <a class="nav-link text-bold "
-                                    href="contact-us">Contact US</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </nav>
-        </header>
+        <?php include('statics/header.php') ?>
         
         <!-- Content -->
         <main id="main">
@@ -130,32 +55,60 @@
                 <div class="container">
         
                     <div class="row">
-                        
-                         <div class="col-lg-12 mt-4">
-                            <div class="member d-flex align-items-start">
-                                <div class="pic">
-                                    <img src="img/keynotes/keynote1.png" class="img-fluid" alt="">
-                                </div>
-                                <div class="member-info">
-                                    <h3>Dugsiga Farsamda Gacanta .</h3>
-        
-                                    <p>Sunday, January 10, 2021 10:13 AM</p>
-                                    <div class="mt-2">
-                                        <a class="btn btn-danger" href="keynotes/1">Read More</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="container py-5 mt-3">
-                            <nav aria-label="...">
-                                <ul class="pagination justify-content-center pagination-circle">
+                    
+                        <?php
+
+                            require_once "./config.php";
+
+                            // Modals
+                            $fetch_modal = "SELECT `id`, `title`, `body`, `image`, DATE_FORMAT(`created_at`, '%W, %M %d, %Y %l:%i %p') AS `created_at` FROM `keynotes` ";                            
+                            $stmt = $conn -> prepare($fetch_modal);
+
+                            $stmt->execute();
+
+                            $stmt->store_result();
                                     
-                                </ul>
-                            </nav>
-                        </div>
-        
-                                    </div>
+                            if ($stmt->num_rows === 0) {
+                        ?>
+                            <h1 class="text-dark mb-0 text-center py-5">No Keynotes Found</h1>
+                        <?php
+                            }
+                            else
+                            {
+
+                                $stmt->bind_result($id, $title, $body, $image, $created_at);
+                                
+                                // output data of each row
+                                while($stmt->fetch()) 
+                                {
+                                
+                        ?>
+                                    <div class="col-lg-12 mt-4">
+                                        <div class="member d-flex align-items-start">
+                                            <div class="pic">
+                                                <img src="https://admin.haldoorvtc.org/uploads/keynotes/<?php echo $image ?>" class="img-fluid" alt="" onerror="this.onerror=null;this.src='https://admin.haldoorvtc.org/assets/img/placeholder.png';">
+                                            </div>
+                                            <div class="member-info">
+                                                <h3><?php echo $title; ?></h3>
+                    
+                                                <p><?php echo $created_at; ?></p>
+                                                <div class="mt-2">
+                                                    <a class="btn btn-primary" href="keynotes/detail.php?id=<?php echo $id; ?>">Watch</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                   
+                        <?php
+                                }
+
+                            }
+
+
+                        ?>
+
+
+                                
+                    </div>
         
                 </div>
             </section>
@@ -274,6 +227,8 @@
     <!-- Scripts -->
     <script src="vendor/jquery/jquery.min.js" defer></script>
     <script src="bootstrap-4.5.3-dist/js/bootstrap.min.js" defer></script>
+    <script> document.getElementById('events-navigations').classList.add("active") </script>
+    <script> document.getElementById('keynotes-navigations').classList.add("active") </script>
 
 </body>
 

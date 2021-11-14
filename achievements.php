@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Our Partners - Haldoor Technical and Vocational Center</title>
+    <title>Achievements - Haldoor Technical and Vocational Center</title>
     <meta content="" name="Haldoor technical and vocational training is a voluntary, non-profit and non-political organization established in 2016 by a group of young people to serve for sharpening the skills of young counter-parts. ">
     <meta content="" name="Haldoor Technical and Vocational Center">
 
@@ -33,141 +33,86 @@
     <div id="app">
 
         <!-- Header -->
-        <header>
-            <nav class="navbar navbar-expand-md navbar-light bg-white">
-                <div class="container d-flex align-items-center">
-
-                    <!-- Logo -->
-                    <a href="index" class="navbar-brand">
-                        <img style="width: 150px; height: 10%;" src="img/logo.png" alt="" class="img-fluid logo-image">
-                    </a>
-
-                    <!-- Mobile Menu -->
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                        aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <!-- Menu -->
-                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                        <ul class="navbar-nav mr-auto">
-
-                            <!-- Home -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold "
-                                    href="index">Home</a>
-                            </li>
-
-                            <!-- About -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold " href="about">About</a>
-                            </li>
-
-                            <!-- Courses -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold "
-                                    href="courses">Courses</a>
-                            </li>
-
-                            <!-- Events -->
-                            <li
-                                class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle "
-                                    href="#" id="eventss" role="button" data-toggle="dropdown" aria-haspopup="true"
-                                    aria-expanded="false">
-                                    Events
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="eventss">
-
-                                    <a class="dropdown-item bg-white "
-                                        href="graduations">Graduations</a>
-
-                                    <a class="dropdown-item bg-white "
-                                        href="achievements">Achievements</a>
-
-                                    <a class="dropdown-item bg-white "
-                                        href="keynotes">Keynotes</a>
-
-
-                                </div>
-                            </li>
-
-                            <!-- Partners -->
-                            <li class="nav-item active">
-                                <a class="nav-link text-bold "
-                                    href="partners">Partners</a>
-                            </li>
-
-                            <!-- Contact Us -->
-                            <li class="nav-item ">
-                                <a class="nav-link text-bold "
-                                    href="contact-us">Contact US</a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </nav>
-        </header>
+        <?php include('statics/header.php') ?>
         
         <!-- Content -->
         <main id="main">
 
-            <!-- Header -->
+            <!-- Title -->
             <section id="breadcrumb" class="breadcrumb">
                 <div class="container">
         
                     <div class="d-flex justify-content-between align-items-center">
-                        <h2 class="font-weight-light">Our Partners</h2>
+                        <h2 class="font-weight-light">Achievements</h2>
         
                     </div>
         
                 </div>
             </section>
         
-            <!-- Partners Logo -->
-            <section id="team" class="team py-5">
+            <!-- Content -->
+            <section id="team" class="team keynote">
                 <div class="container">
         
-                    <div class="section-title">
-                        <h2>Partners</h2>
-                        <p>Our Partners</p>
-                    </div>
-                
                     <div class="row">
-                        
-                        <!-- Telesom -->
-                        <div class="col-lg-4 col-md-4 col-6">
-                            <div class="member d-flex align-items-start">
-                                <div class="pic col-sm-5">
-                                    <img src="img/partners/telesom.jpeg"  class="img-fluid partner-image" alt="Telesom">
-                                </div>
-                            </div>
-                        </div>
+                    
+                        <?php
 
-                        <!-- Government -->
-                        <div class="col-lg-4 col-md-4 col-6">
-                            <div class="member d-flex align-items-start">
-                                <div class="pic col-sm-5">
-                                    <img src="img/partners/goverment.jpeg" class="img-fluid partner-image" alt="Government">
-                                </div>
-                            </div>
-                        </div>                        
-                        
-                        <!-- Kaabsan -->
-                        <div class="col-lg-4 col-md-4 col-6">
-                            <div class="member d-flex align-items-start">
-                                <div class="pic col-sm-5">
-                                    <img src="img/partners/kaabsan.jpeg" class="img-fluid partner-image" alt="Kaabsan">
-                                </div>
-                            </div>
-                        </div>                        
+                            require_once "./config.php";
 
+                            // Modals
+                            $fetch_modal = "SELECT `id`, `title`, `body`, `image`, DATE_FORMAT(`created_at`, '%W, %M %d, %Y %l:%i %p') AS `created_at` FROM `achievements` ";                            
+                            $stmt = $conn -> prepare($fetch_modal);
+
+                            $stmt->execute();
+
+                            $stmt->store_result();
+                                    
+                            if ($stmt->num_rows === 0) {
+                        ?>
+                            <h1 class="text-dark mb-0 text-center py-5">No Graduations Found</h1>
+                        <?php
+                            }
+                            else
+                            {
+
+                                $stmt->bind_result($id, $title, $body, $image, $created_at);
+                                
+                                // output data of each row
+                                while($stmt->fetch()) 
+                                {
+                                
+                        ?>
+                                    <div class="col-lg-12 mt-4">
+                                        <div class="member d-flex align-items-start">
+                                            <div class="pic">
+                                                <img src="https://admin.haldoorvtc.org/uploads/achievements/<?php echo $image ?>" class="img-fluid" alt="" onerror="this.onerror=null;this.src='https://admin.haldoorvtc.org/assets/img/placeholder.png';">
+                                            </div>
+                                            <div class="member-info">
+                                                <h3><?php echo $title; ?></h3>
+                    
+                                                <p><?php echo $created_at; ?></p>
+                                                <div class="mt-2">
+                                                    <a class="btn btn-primary" href="achievements/detail.php?id=<?php echo $id; ?>">Watch</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                                   
+                        <?php
+                                }
+
+                            }
+
+
+                        ?>
+
+
+                                
                     </div>
         
                 </div>
             </section>
-        
+                
         </main>
 
         <!-- Footer -->
@@ -282,6 +227,8 @@
     <!-- Scripts -->
     <script src="vendor/jquery/jquery.min.js" defer></script>
     <script src="bootstrap-4.5.3-dist/js/bootstrap.min.js" defer></script>
+    <script> document.getElementById('events-navigations').classList.add("active") </script>
+    <script> document.getElementById('achievements-navigations').classList.add("active") </script>
 
 </body>
 

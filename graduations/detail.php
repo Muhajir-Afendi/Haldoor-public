@@ -19,8 +19,8 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="bootstrap-4.5.3-dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/custom.css" rel="stylesheet" >
+    <link href="../bootstrap-4.5.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/custom.css" rel="stylesheet" >
 
     <!-- Icons -->
     <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
@@ -39,7 +39,7 @@
 
                     <!-- Logo -->
                     <a href="index" class="navbar-brand">
-                        <img style="width: 150px; height: 10%;" src="img/logo.png" alt="" class="img-fluid logo-image">
+                        <img style="width: 150px; height: 10%;" src="../img/logo.png" alt="" class="img-fluid logo-image">
                     </a>
 
                     <!-- Mobile Menu -->
@@ -55,18 +55,18 @@
                             <!-- Home -->
                             <li class="nav-item">
                                 <a class="nav-link text-bold "
-                                    href="index">Home</a>
+                                    href="../index.php">Home</a>
                             </li>
 
                             <!-- About -->
-                            <li class="nav-item">
-                                <a class="nav-link text-bold " href="about">About</a>
+                            <li class="nav-item ">
+                                <a class="nav-link text-bold " href="../about.php">About</a>
                             </li>
 
                             <!-- Courses -->
-                            <li class="nav-item">
+                            <li class="nav-item ">
                                 <a class="nav-link text-bold "
-                                    href="courses">Courses</a>
+                                    href="../courses.php">Courses</a>
                             </li>
 
                             <!-- Events -->
@@ -80,13 +80,13 @@
                                 <div class="dropdown-menu" aria-labelledby="eventss">
 
                                     <a class="dropdown-item bg-white active"
-                                        href="graduations">Graduations</a>
+                                        href="../graduations.php">Graduations</a>
 
                                     <a class="dropdown-item bg-white "
-                                        href="achievements">Achievements</a>
+                                        href="../achievements.php">Achievements</a>
 
                                     <a class="dropdown-item bg-white "
-                                        href="keynotes">Keynotes</a>
+                                        href="../keynotes.php">Keynotes</a>
 
 
                                 </div>
@@ -95,21 +95,21 @@
                             <!-- Partners -->
                             <li class="nav-item ">
                                 <a class="nav-link text-bold "
-                                    href="partners">Partners</a>
+                                    href="../partners.php">Partners</a>
                             </li>
 
                             <!-- Contact Us -->
                             <li class="nav-item ">
                                 <a class="nav-link text-bold "
-                                    href="contact-us">Contact US</a>
+                                    href="../contact-us.php">Contact US</a>
                             </li>
                         </ul>
                     </div>
 
                 </div>
             </nav>
-        </header>
-        
+        </header>           
+
         <!-- Content -->
         <main id="main">
 
@@ -126,16 +126,118 @@
             </section>
         
             <!-- Content -->
-            <section id="team" class="team ">
+            <section  id="blog" class="blog">
                 <div class="container">
         
                     <div class="row">
-                        <h1 class="text-dark mb-0 text-center py-5">No Graduations Found</h1>
+                    
+                        <?php
+
+                            require_once "../config.php";
+
+                            // Modals
+                            $fetch_modal = "SELECT `id`, `title`, `body`, `image`, DATE_FORMAT(`created_at`, '%M %d, %Y') AS `created_at` FROM `graduations` WHERE `id` = ? ";                            
+                            $stmt = $conn -> prepare($fetch_modal);
+                            $stmt->bind_param("s", $_GET["id"]);
+
+
+                            $stmt->execute();
+
+                            $stmt->store_result();
+                                    
+                            if ($stmt->num_rows === 0) {
+                        ?>
+                            <h1 class="text-dark mb-0 text-center py-5">This graduation does not exist</h1>
+                        <?php
+                            }
+                            else
+                            {
+
+                                $stmt->bind_result($id, $title, $body, $image, $created_at);
+                                
+                                // output data of each row
+                                while($stmt->fetch()) 
+                                {
+                                
+                        ?>
+
+                                    <div class="col-lg-8 entries">
+                                            
+                                        <article class="entry entry-single">
+
+                                            <div class="entry-img">
+                                                <img src="https://admin.haldoorvtc.org/uploads/graduations/<?php echo $image ?>" alt="" class="img-fluid" onerror="this.onerror=null;this.src='https://admin.haldoorvtc.org/assets/img/placeholder.png';">
+                                            </div>
+
+                                            <h2 class="entry-title">
+                                                <?php echo $title; ?>
+                                            </h2>
+
+                                            <div class="entry-meta">
+                                                <ul>
+                                                    <li class="d-flex align-items-center">
+                                                        <i class="fas fa-user"></i>Admin
+                                                    </li>
+                                                    <li class="d-flex align-items-center">
+                                                        <i class="far fa-clock"></i>
+                                                        <time datetime="2020-10-01"><?php echo $created_at; ?></time>
+                                                    </li>
+
+                                                </ul>
+                                            </div>
+
+                                            <div class="entry-content">
+                                                <p>
+                                                    <p>
+                                                        <?php echo $body; ?>
+                                                    </p>
+                                                </p>
+
+                                            </div>
+
+                                            <div class="entry-footer clearfix">
+                                                <div class="float-left">
+                                                    <i class="fas fa-folder-open"></i> &nbsp;
+                                                    <ul class="cats">
+                                                        <li><a href="../graduations.php">Graduations</a></li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="float-right share">
+                                                    <a href="#" title="Share on Twitter" target="__blank">
+                                                        <i class="fab fa-twitter"></i>
+                                                    </a>
+                                                    <a href="#" title="Share on Facebook" target="__blank">
+                                                        <i class="fab fa-facebook"></i>
+                                                    </a>
+                                                    <a href="#" title="Share on Instagram" target="__blank">
+                                                        <i class="fab fa-instagram"></i>
+                                                    </a>
+                                                    <a href="https://youtu.be/jM-MqBbv-ts" title="Share on Youtube" target="__blank">
+                                                        <i class="fab fa-youtube"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+
+                                        </article>
+
+                                    </div>
+
+                        <?php
+                                }
+
+                            }
+
+
+                        ?>
+
+
+                                
                     </div>
         
                 </div>
             </section>
-                
+                        
         </main>
 
         <!-- Footer -->
@@ -248,8 +350,8 @@
     </div>
 
     <!-- Scripts -->
-    <script src="vendor/jquery/jquery.min.js" defer></script>
-    <script src="bootstrap-4.5.3-dist/js/bootstrap.min.js" defer></script>
+    <script src="../vendor/jquery/jquery.min.js" defer></script>
+    <script src="../bootstrap-4.5.3-dist/js/bootstrap.min.js" defer></script>
 
 </body>
 
