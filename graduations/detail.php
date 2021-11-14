@@ -158,7 +158,11 @@
                                 // output data of each row
                                 while($stmt->fetch()) 
                                 {
-                                
+
+                                    if ($facebook === null  || $facebook === "")    $facebook = "#";
+                                    if ($youtube === null   || $youtube === "")     $youtube = "#";
+                                    if ($instagram === null || $instagram === "")   $instagram = "#";
+                                    if ($twitter === null   || $twitter === "")     $twitter = "#";
                         ?>
 
                                     <div class="col-lg-8 entries">
