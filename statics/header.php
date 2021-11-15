@@ -4,7 +4,7 @@
         <div class="container d-flex align-items-center">
 
             <!-- Logo -->
-            <a href="index" class="navbar-brand">
+            <a href="/" class="navbar-brand">
                 <img style="width: 150px; height: 10%;" src="img/logo.png" alt="" class="img-fluid logo-image">
             </a>
 
